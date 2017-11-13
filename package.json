@@ -1,0 +1,27 @@
+{
+  "name": "upgradeablesoliditycontract",
+  "version": "1.0.0",
+  "description": "Upgradeable Contracts Repository",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ethereumjs-testrpc": "^6.0.1",
+    "truffle": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LimelabsTech/UpgradeableSolidityContract.git"
+  },
+  "author": "George Spasov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LimelabsTech/UpgradeableSolidityContract/issues"
+  },
+  "homepage": "https://github.com/LimelabsTech/UpgradeableSolidityContract#readme"
+}

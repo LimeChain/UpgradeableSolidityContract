@@ -1,2 +1,0 @@
-# UpgradeableSolidityContract
-Upgradeable Contracts Repository
