@@ -25,7 +25,6 @@ contract('UpgradeableProxy', function (accounts) {
 
 		it("should be able to call getter method of the first contract", async function () {
 			const rate = await implementedContract.getRate();
-			console.log(rate);
 			assert(rate.eq(1000), "The getRate did not return correctly");
 		});
 
@@ -51,6 +50,16 @@ contract('UpgradeableProxy', function (accounts) {
 			const rate2 = await implementedContract.getRate();
 			assert(rate1.eq(1000), "The rate1 did not return correctly");
 			assert(rate2.eq(2000), "The rate2 did not return correctly");
+		});
+
+		it("should be able to upgrade contract", async function () {
+			await implementedContract.setRate(43);
+			const rate = await implementedContract.rate();
+			assert(rate.eq(43), "The first rate was not set correctly");
+			const upgradeableContract = await UpgradeableImplementation.at(proxy.address);
+			await upgradeableContract.upgradeImplementation(impl2.address);
+			const rate2 = await implementedContract.rate();
+			assert(rate2.eq(43), "The second rate was not set correctly");
 		});
 
 	});
