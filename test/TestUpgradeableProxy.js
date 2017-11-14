@@ -1,4 +1,4 @@
-const UpgradeableProxy = artifacts.require("./UpgradeableProxy.sol");
+const TestProxy = artifacts.require("./TestProxy.sol");
 const TestImpl1 = artifacts.require("./TestImpl1.sol");
 const TestImpl2 = artifacts.require("./TestImpl2.sol");
 const ITestImpl = artifacts.require("./ITestImpl.sol");
@@ -6,7 +6,7 @@ const UpgradeableImplementation = artifacts.require("./UpgradeableImplementation
 const util = require('./util');
 const expectThrow = util.expectThrow;
 
-contract('UpgradeableProxy', function (accounts) {
+contract('TestProxy', function (accounts) {
 
 	let implementedContract;
 	let proxy;
@@ -19,7 +19,7 @@ contract('UpgradeableProxy', function (accounts) {
 	describe("creting proxy", () => {
 		beforeEach(async function () {
 			impl = await TestImpl1.new();
-			proxy = await UpgradeableProxy.new(impl.address);
+			proxy = await TestProxy.new(impl.address);
 			implementedContract = await ITestImpl.at(proxy.address);
 		})
 
@@ -39,7 +39,7 @@ contract('UpgradeableProxy', function (accounts) {
 		beforeEach(async function () {
 			impl = await TestImpl1.new();
 			impl2 = await TestImpl2.new();
-			proxy = await UpgradeableProxy.new(impl.address);
+			proxy = await TestProxy.new(impl.address);
 			implementedContract = await ITestImpl.at(proxy.address);
 		})
 

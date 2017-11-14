@@ -1,7 +1,7 @@
 pragma solidity ^0.4.15;
 
-import "./Upgradeability/SharedStorage.sol";
-import "./Upgradeability/Forwardable.sol";
+import "./SharedStorage.sol";
+import "./Forwardable.sol";
 
 contract UpgradeableProxy is SharedStorage, Forwardable {
     /**
