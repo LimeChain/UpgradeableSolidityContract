@@ -1,4 +1,4 @@
-pragma solidity 0.4.18;
+pragma solidity ^0.4.15;
 
 import "./Upgradeability/SharedStorage.sol";
 import "./Upgradeability/Forwardable.sol";

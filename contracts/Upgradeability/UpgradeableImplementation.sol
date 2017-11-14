@@ -1,12 +1,12 @@
-pragma solidity 0.4.18;
+pragma solidity ^0.4.15;
 
 import './SharedStorage.sol';
 
 contract UpgradeableImplementation is SharedStorage {
 
-	event UpgradedContract(address indexed newKernel);
+	event UpgradedContract(address indexed _newImpl);
     
-    function upgradeImplementation(address _newImpl) external {
+    function upgradeImplementation(address _newImpl) public {
         contractImplementation = _newImpl;
         UpgradedContract(_newImpl);
     }
