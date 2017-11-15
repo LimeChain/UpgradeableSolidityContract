@@ -1,8 +1,8 @@
 const TestProxy = artifacts.require("./TestProxy.sol");
-const TestImpl1 = artifacts.require("./TestImpl1.sol");
-const TestImpl2 = artifacts.require("./TestImpl2.sol");
-const ITestImpl = artifacts.require("./ITestImpl.sol");
-const UpgradeableImplementation = artifacts.require("./UpgradeableImplementation.sol");
+const TestOwnableImplementation = artifacts.require("./TestOwnableImplementation.sol");
+const TestOwnableImplementation2 = artifacts.require("./TestOwnableImplementation2.sol");
+const ITestOwnableImpl = artifacts.require("./ITestOwnableImpl.sol");
+const IOwnableUpgradeableImplementation = artifacts.require("./Upgradeability/OwnableUpgradeableImplementation/IOwnableUpgradeableImplementation.sol");
 const util = require('./util');
 const expectThrow = util.expectThrow;
 
@@ -18,9 +18,10 @@ contract('TestProxy', function (accounts) {
 
 	describe("creting proxy", () => {
 		beforeEach(async function () {
-			impl = await TestImpl1.new();
+			impl = await TestOwnableImplementation.new();
 			proxy = await TestProxy.new(impl.address);
-			implementedContract = await ITestImpl.at(proxy.address);
+			implementedContract = await ITestOwnableImpl.at(proxy.address);
+			implementedContract.init();
 		})
 
 		it("should be able to call getter method of the first contract", async function () {
@@ -33,19 +34,25 @@ contract('TestProxy', function (accounts) {
 			const rate = await implementedContract.rate();
 			assert(rate.eq(43), "The rate did not return correctly");
 		});
+
+		it("should set the owner of the first contract", async function () {
+			const owner = await implementedContract.getOwner.call();
+			assert.strictEqual(owner, _owner, "The rate did not return correctly");
+		});
 	});
 
 	describe("creting proxy", () => {
 		beforeEach(async function () {
-			impl = await TestImpl1.new();
-			impl2 = await TestImpl2.new();
+			impl = await TestOwnableImplementation.new();
+			impl2 = await TestOwnableImplementation2.new();
 			proxy = await TestProxy.new(impl.address);
-			implementedContract = await ITestImpl.at(proxy.address);
+			implementedContract = await ITestOwnableImpl.at(proxy.address);
+			implementedContract.init();
 		})
 
 		it("should be able to upgrade contract", async function () {
 			const rate1 = await implementedContract.getRate();
-			const upgradeableContract = await UpgradeableImplementation.at(proxy.address);
+			const upgradeableContract = await IOwnableUpgradeableImplementation.at(proxy.address);
 			await upgradeableContract.upgradeImplementation(impl2.address);
 			const rate2 = await implementedContract.getRate();
 			assert(rate1.eq(1000), "The rate1 did not return correctly");
@@ -56,10 +63,17 @@ contract('TestProxy', function (accounts) {
 			await implementedContract.setRate(43);
 			const rate = await implementedContract.rate();
 			assert(rate.eq(43), "The first rate was not set correctly");
-			const upgradeableContract = await UpgradeableImplementation.at(proxy.address);
+			const upgradeableContract = await IOwnableUpgradeableImplementation.at(proxy.address);
 			await upgradeableContract.upgradeImplementation(impl2.address);
 			const rate2 = await implementedContract.rate();
 			assert(rate2.eq(43), "The second rate was not set correctly");
+		});
+
+		it("should throw on upgrade contract from not owner", async function () {
+			const upgradeableContract = await IOwnableUpgradeableImplementation.at(proxy.address);
+			await expectThrow(upgradeableContract.upgradeImplementation(impl2.address, {
+				from: _notOwner
+			}));
 		});
 
 	});
