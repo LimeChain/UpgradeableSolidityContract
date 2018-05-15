@@ -1,21 +1,22 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.23;
 
 import "./Upgradeability/OwnableUpgradeableImplementation/OwnableUpgradeableImplementation.sol";
-import "./ITestImpl.sol";
+import "./ITestOwnableImpl.sol";
 
-contract TestOwnableImplementation is ITestImpl, OwnableUpgradeableImplementation {
 
-	uint public rate;
+contract TestOwnableImplementation is ITestOwnableImpl, OwnableUpgradeableImplementation {
 
-	function rate() public constant returns(uint) {
-		return rate;
-	}
+    uint public rate;
 
-	function setRate(uint r) public {
-		rate = r;
-	}
+    function rate() public view returns (uint) {
+        return rate;
+    }
 
-	function getRate() public constant returns(uint) {
-		return 1000;
-	}
+    function setRate(uint r) public {
+        rate = r;
+    }
+
+    function getRate() public view returns (uint) {
+        return 1000;
+    }
 }

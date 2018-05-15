@@ -1,7 +1,8 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.23;
 
 import "./SharedStorage.sol";
 import "./Forwardable.sol";
+
 
 contract UpgradeableProxy is SharedStorage, Forwardable {
     /**
@@ -17,7 +18,7 @@ contract UpgradeableProxy is SharedStorage, Forwardable {
     * @dev All calls made to the proxy are forwarded to the contract implementation via a delegatecall
     * @return Any bytes32 value the implementation returns
     */
-    function () payable public {
-        delegatedFwd(contractImplementation, msg.data);
+    function() public payable {
+        delegatedFwd(contractImplementation);
     }
 }

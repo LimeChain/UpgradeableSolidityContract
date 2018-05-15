@@ -1,12 +1,13 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.23;
 
 import "./Upgradeability/OwnableUpgradeableImplementation/IOwnableUpgradeableImplementation.sol";
 
+
 contract ITestOwnableImpl is IOwnableUpgradeableImplementation {
 
-	function rate() public constant returns(uint);
+    function rate() public view returns (uint);
 
-	function setRate(uint r) public;
+    function setRate(uint r) public;
 
-	function getRate() public constant returns(uint);
+    function getRate() public view returns (uint);
 }

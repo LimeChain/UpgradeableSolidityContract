@@ -4,7 +4,8 @@ var TestProxy = artifacts.require("./TestProxy.sol");
 
 module.exports = async function (deployer) {
 
-	await deployer.deploy(TestOwnableImplementation);
-	await deployer.deploy(TestOwnableImplementation2);
-	await deployer.deploy(TestProxy, TestOwnableImplementation.address);
+    await deployer.deploy(TestOwnableImplementation);
+    let TestOwnableImplementationInstance = await TestOwnableImplementation.deployed();
+    await deployer.deploy(TestOwnableImplementation2);
+    await deployer.deploy(TestProxy, TestOwnableImplementationInstance.address);
 };

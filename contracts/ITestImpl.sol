@@ -1,10 +1,11 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.23;
+
 
 contract ITestImpl {
 
-	function rate() public constant returns(uint);
+    function rate() public view returns (uint);
 
-	function setRate(uint r) public;
+    function setRate(uint r) public;
 
-	function getRate() public constant returns(uint);
+    function getRate() public view returns (uint);
 }

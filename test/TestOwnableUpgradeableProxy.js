@@ -6,7 +6,7 @@ const IOwnableUpgradeableImplementation = artifacts.require("./Upgradeability/Ow
 const util = require('./util');
 const expectThrow = util.expectThrow;
 
-contract('TestProxy', function (accounts) {
+contract('TestProxyOwnable', function (accounts) {
 
 	let implementedContract;
 	let proxy;
@@ -21,8 +21,8 @@ contract('TestProxy', function (accounts) {
 			impl = await TestOwnableImplementation.new();
 			proxy = await TestProxy.new(impl.address);
 			implementedContract = await ITestOwnableImpl.at(proxy.address);
-			implementedContract.init();
-		})
+			await implementedContract.init();
+		});
 
 		it("should be able to call getter method of the first contract", async function () {
 			const rate = await implementedContract.getRate();
