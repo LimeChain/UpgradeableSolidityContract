@@ -42,7 +42,7 @@ contract NotInitedOwnable {
      */
     function transferOwnership(address newOwner) public ownerSet onlyOwner  {
         require(newOwner != address(0), "newOwner address is 0");
-        OwnershipTransferred(owner, newOwner);
+        emit OwnershipTransferred(owner, newOwner);
         owner = newOwner;
     }
 }
