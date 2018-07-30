@@ -16,7 +16,7 @@ contract('TestProxy', function (accounts) {
 	const _owner = accounts[0];
 	const _notOwner = accounts[1];
 
-	describe("creting proxy", () => {
+	describe("creating proxy", () => {
 		beforeEach(async function () {
 			impl = await TestImpl1.new();
 			proxy = await TestProxy.new(impl.address);
@@ -35,7 +35,7 @@ contract('TestProxy', function (accounts) {
 		});
 	});
 
-	describe("creting proxy", () => {
+	describe("creating proxy", () => {
 		beforeEach(async function () {
 			impl = await TestImpl1.new();
 			impl2 = await TestImpl2.new();

@@ -5,8 +5,6 @@ import "../../Ownership/INotInitedOwnable.sol";
 
 contract IOwnableUpgradeableImplementation is INotInitedOwnable {
 
-    function transferOwnership(address newOwner) public;
-
     function getOwner() public view returns (address);
 
     function upgradeImplementation(address _newImpl) public;
