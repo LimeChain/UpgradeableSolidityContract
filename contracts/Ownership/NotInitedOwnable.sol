@@ -28,12 +28,21 @@ contract NotInitedOwnable {
     }
 
     /**
+    * @dev Initializes the contract and inits with the msg sender as an owner
+    * account.
+    */
+    function init() public {
+        require(owner == address(0), "Contract already has owner");
+        owner = msg.sender;
+    }
+
+    /**
      * @dev Allows the current owner to transfer control of the contract to a newOwner.
      * @param newOwner The address to transfer ownership to.
      */
     function transferOwnership(address newOwner) public ownerSet onlyOwner  {
         require(newOwner != address(0), "newOwner address is 0");
-        OwnershipTransferred(owner, newOwner);
+        emit OwnershipTransferred(owner, newOwner);
         owner = newOwner;
     }
 }
